@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TAppWalletRecordMapper">
+    
+    <resultMap type="TAppWalletRecord" id="TAppWalletRecordResult">
+        <result property="id"    column="id"    />
+        <result property="amount"    column="amount"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="userId"    column="user_id"    />
+        <result property="searchValue"    column="search_value"    />
+        <result property="beforeAmount"    column="before_amount"    />
+        <result property="afterAmount"    column="after_amount"    />
+        <result property="serialId"    column="serial_id"    />
+        <result property="type"    column="type"    />
+        <result property="symbol"    column="symbol"    />
+    </resultMap>
+
+    <sql id="selectTAppWalletRecordVo">
+        select id, amount, create_by, create_time, update_by, update_time, remark, user_id, search_value, before_amount, after_amount, serial_id, type, symbol from t_app_wallet_record
+    </sql>
+
+    <select id="selectTAppWalletRecordList" parameterType="TAppWalletRecord" resultMap="TAppWalletRecordResult">
+        <include refid="selectTAppWalletRecordVo"/>
+        <where>  
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="searchValue != null  and searchValue != ''"> and search_value = #{searchValue}</if>
+            <if test="beforeAmount != null "> and before_amount = #{beforeAmount}</if>
+            <if test="afterAmount != null "> and after_amount = #{afterAmount}</if>
+            <if test="serialId != null  and serialId != ''"> and serial_id = #{serialId}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="symbol != null  and symbol != ''"> and symbol = #{symbol}</if>
+        </where>
+    </select>
+    
+    <select id="selectTAppWalletRecordById" parameterType="Long" resultMap="TAppWalletRecordResult">
+        <include refid="selectTAppWalletRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTAppWalletRecord" parameterType="TAppWalletRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into t_app_wallet_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="amount != null">amount,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="searchValue != null">search_value,</if>
+            <if test="beforeAmount != null">before_amount,</if>
+            <if test="afterAmount != null">after_amount,</if>
+            <if test="serialId != null">serial_id,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="symbol != null">symbol,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="amount != null">#{amount},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="searchValue != null">#{searchValue},</if>
+            <if test="beforeAmount != null">#{beforeAmount},</if>
+            <if test="afterAmount != null">#{afterAmount},</if>
+            <if test="serialId != null">#{serialId},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="symbol != null">#{symbol},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTAppWalletRecord" parameterType="TAppWalletRecord">
+        update t_app_wallet_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="searchValue != null">search_value = #{searchValue},</if>
+            <if test="beforeAmount != null">before_amount = #{beforeAmount},</if>
+            <if test="afterAmount != null">after_amount = #{afterAmount},</if>
+            <if test="serialId != null">serial_id = #{serialId},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="symbol != null">symbol = #{symbol},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTAppWalletRecordById" parameterType="Long">
+        delete from t_app_wallet_record where id = #{id}
+    </delete>
+
+    <delete id="deleteTAppWalletRecordByIds" parameterType="String">
+        delete from t_app_wallet_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

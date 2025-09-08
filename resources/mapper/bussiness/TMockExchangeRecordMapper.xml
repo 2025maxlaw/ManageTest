@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bussiness.mapper.TMockExchangeRecordMapper">
+    
+    <resultMap type="TMockExchangeRecord" id="TMockExchangeRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="realId"    column="real_id"    />
+        <result property="mockId"    column="mock_id"    />
+        <result property="type"    column="type"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="adminParentIds"    column="admin_parent_ids"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTMockExchangeRecordVo">
+        select id, user_id, real_id, mock_id, type, create_time, update_time, admin_parent_ids, create_by, update_by, remark from t_mock_exchange_record
+    </sql>
+
+    <select id="selectTMockExchangeRecordList" parameterType="TMockExchangeRecord" resultMap="TMockExchangeRecordResult">
+        <include refid="selectTMockExchangeRecordVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="realId != null "> and real_id = #{realId}</if>
+            <if test="mockId != null "> and mock_id = #{mockId}</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectTMockExchangeRecordById" parameterType="Long" resultMap="TMockExchangeRecordResult">
+        <include refid="selectTMockExchangeRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTMockExchangeRecord" parameterType="TMockExchangeRecord">
+        insert into t_mock_exchange_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="realId != null">real_id,</if>
+            <if test="mockId != null">mock_id,</if>
+            <if test="type != null">type,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="adminParentIds != null">admin_parent_ids,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="realId != null">#{realId},</if>
+            <if test="mockId != null">#{mockId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="adminParentIds != null">#{adminParentIds},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTMockExchangeRecord" parameterType="TMockExchangeRecord">
+        update t_mock_exchange_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="realId != null">real_id = #{realId},</if>
+            <if test="mockId != null">mock_id = #{mockId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="adminParentIds != null">admin_parent_ids = #{adminParentIds},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTMockExchangeRecordById" parameterType="Long">
+        delete from t_mock_exchange_record where id = #{id}
+    </delete>
+
+    <delete id="deleteTMockExchangeRecordByIds" parameterType="String">
+        delete from t_mock_exchange_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

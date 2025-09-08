@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bussiness.mapper.TAssetTransFundsMapper">
+    
+    <resultMap type="TAssetTransFunds" id="TAssetTransFundsResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="outAccount"    column="out_account"    />
+        <result property="outCoin"    column="out_coin"    />
+        <result property="inAccount"    column="in_account"    />
+        <result property="inCoin"    column="in_coin"    />
+        <result property="amount"    column="amount"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTAssetTransFundsVo">
+        select id, user_id, out_account, out_coin, in_account, in_coin, amount, create_time, create_by, update_time, update_by, remark from t_asset_trans_funds
+    </sql>
+
+    <select id="selectTAssetTransFundsList" parameterType="TAssetTransFunds" resultMap="TAssetTransFundsResult">
+        <include refid="selectTAssetTransFundsVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="outAccount != null "> and out_account = #{outAccount}</if>
+            <if test="outCoin != null  and outCoin != ''"> and out_coin = #{outCoin}</if>
+            <if test="inAccount != null "> and in_account = #{inAccount}</if>
+            <if test="inCoin != null  and inCoin != ''"> and in_coin = #{inCoin}</if>
+        </where>
+    </select>
+    
+    <select id="selectTAssetTransFundsById" parameterType="Long" resultMap="TAssetTransFundsResult">
+        <include refid="selectTAssetTransFundsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTAssetTransFunds" parameterType="TAssetTransFunds" useGeneratedKeys="true" keyProperty="id">
+        insert into t_asset_trans_funds
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="outAccount != null">out_account,</if>
+            <if test="outCoin != null">out_coin,</if>
+            <if test="inAccount != null">in_account,</if>
+            <if test="inCoin != null">in_coin,</if>
+            <if test="amount != null">amount,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="outAccount != null">#{outAccount},</if>
+            <if test="outCoin != null">#{outCoin},</if>
+            <if test="inAccount != null">#{inAccount},</if>
+            <if test="inCoin != null">#{inCoin},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTAssetTransFunds" parameterType="TAssetTransFunds">
+        update t_asset_trans_funds
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="outAccount != null">out_account = #{outAccount},</if>
+            <if test="outCoin != null">out_coin = #{outCoin},</if>
+            <if test="inAccount != null">in_account = #{inAccount},</if>
+            <if test="inCoin != null">in_coin = #{inCoin},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTAssetTransFundsById" parameterType="Long">
+        delete from t_asset_trans_funds where id = #{id}
+    </delete>
+
+    <delete id="deleteTAssetTransFundsByIds" parameterType="String">
+        delete from t_asset_trans_funds where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

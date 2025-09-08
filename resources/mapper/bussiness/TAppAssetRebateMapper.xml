@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bussiness.mapper.TAppAssetRebateMapper">
+    
+    <resultMap type="TAppAssetRebate" id="TAppAssetRebateResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="adress"    column="adress"    />
+        <result property="symbol"    column="symbol"    />
+        <result property="amout"    column="amout"    />
+        <result property="rebateAmout"    column="rebate_amout"    />
+        <result property="rebateRate"    column="rebate_rate"    />
+        <result property="type"    column="type"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="searchValue"    column="search_value"    />
+    </resultMap>
+
+    <sql id="selectTAppAssetRebateVo">
+        select id, user_id, adress, symbol, amout, rebate_amout, rebate_rate, type, create_by, create_time, update_by, update_time, remark, search_value from t_app_asset_rebate
+    </sql>
+
+    <select id="selectTAppAssetRebateList" parameterType="TAppAssetRebate" resultMap="TAppAssetRebateResult">
+        <include refid="selectTAppAssetRebateVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="adress != null  and adress != ''"> and adress = #{adress}</if>
+            <if test="symbol != null  and symbol != ''"> and symbol = #{symbol}</if>
+            <if test="amout != null "> and amout = #{amout}</if>
+            <if test="rebateAmout != null "> and rebate_amout = #{rebateAmout}</if>
+            <if test="rebateRate != null "> and rebate_rate = #{rebateRate}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectTAppAssetRebateById" parameterType="Long" resultMap="TAppAssetRebateResult">
+        <include refid="selectTAppAssetRebateVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTAppAssetRebate" parameterType="TAppAssetRebate" useGeneratedKeys="true" keyProperty="id">
+        insert into t_app_asset_rebate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="adress != null">adress,</if>
+            <if test="symbol != null and symbol != ''">symbol,</if>
+            <if test="amout != null">amout,</if>
+            <if test="rebateAmout != null">rebate_amout,</if>
+            <if test="rebateRate != null">rebate_rate,</if>
+            <if test="type != null">type,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="searchValue != null">search_value,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="adress != null">#{adress},</if>
+            <if test="symbol != null and symbol != ''">#{symbol},</if>
+            <if test="amout != null">#{amout},</if>
+            <if test="rebateAmout != null">#{rebateAmout},</if>
+            <if test="rebateRate != null">#{rebateRate},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="searchValue != null">#{searchValue},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTAppAssetRebate" parameterType="TAppAssetRebate">
+        update t_app_asset_rebate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="adress != null">adress = #{adress},</if>
+            <if test="symbol != null and symbol != ''">symbol = #{symbol},</if>
+            <if test="amout != null">amout = #{amout},</if>
+            <if test="rebateAmout != null">rebate_amout = #{rebateAmout},</if>
+            <if test="rebateRate != null">rebate_rate = #{rebateRate},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="searchValue != null">search_value = #{searchValue},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTAppAssetRebateById" parameterType="Long">
+        delete from t_app_asset_rebate where id = #{id}
+    </delete>
+
+    <delete id="deleteTAppAssetRebateByIds" parameterType="String">
+        delete from t_app_asset_rebate where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
